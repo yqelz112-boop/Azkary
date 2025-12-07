@@ -1,42 +1,378 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="referrer" content="no-referrer"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>فهرس القرآن — أذكاري الذكية</title>
-  <link rel="stylesheet" href="../styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer"/>
+    <title>أذكاري الذكية - Smart Azkar</title>
+    <meta name="description" content="تطبيق إسلامي شامل للأذكار والقرآن والأحاديث والتسبيح">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- styles loaded from styles.css -->
 </head>
 <body>
-  <header class="header">
-    <nav class="nav">
-      <div class="logo"><span class="logo-icon">☪</span><span class="logo-text">أذكاري</span></div>
-      <ul class="nav-links">
-        <li><a href="../index.html">الرئيسية</a></li>
-        <li><a href="../azkar.html">الأذكار</a></li>
-        <li><a href="../quran/index.html" class="active">القرآن</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main class="container" id="top" style="padding-top:120px;text-align:right;">
-    <h1 class="section-title">فهرس سور القرآن الكريم</h1>
-    <p class="section-subtitle">جزء عمّ متاح هنا</p>
-
-    <div style="display:flex;justify-content:center;align-items:center;padding:48px 0;">
-      <a href="./juz30.html" class="surah-card" style="max-width:760px;width:100%;display:flex;align-items:center;justify-content:space-between;padding:22px;border-radius:16px;text-decoration:none;">
-        <div style="display:flex;gap:14px;align-items:center;">
-          <span class="surah-number" style="font-size:1.25rem;font-weight:800;background:var(--background);padding:10px 14px;border-radius:12px;color:var(--primary);">جزء عم</span>
-          <div class="surah-info" style="text-align:right;">
-            <h4 style="margin:0;font-family:var(--font-arabic);">جزء عم</h4>
-            <small class="muted">سور من 78 إلى 114 (قصيرة)</small>
-          </div>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <span class="logo-icon">☪</span>
+                <span class="logo-text">أذكاري</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#azkar">الأذكار</a></li>
+                <li><a href="quran/index.html">القرآن</a></li>
+                <li><a href="prayer.html">مواقيت الصلاة</a></li>
+                <li><a href="#hadith">الحديث</a></li>
+                <li><a href="#tasbeeh">التسبيح</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#home" onclick="closeMobileMenu()">الرئيسية</a>
+            <a href="#azkar" onclick="closeMobileMenu()">الأذكار</a>
+            <a href="quran/index.html" onclick="closeMobileMenu()">القرآن</a>
+            <a href="prayer.html" onclick="closeMobileMenu()">مواقيت الصلاة</a>
+            <a href="#hadith" onclick="closeMobileMenu()">الحديث</a>
+            <a href="#tasbeeh" onclick="closeMobileMenu()">التسبيح</a>
         </div>
-        <span class="btn btn-primary" style="padding:10px 18px;border-radius:10px;">عرض</span>
-      </a>
-    </div>
-  </main>
+    </header>
 
-  <script src="../script.js"></script>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-decorations">
+            <span class="decoration star">✦</span>
+            <span class="decoration moon">☾</span>
+            <span class="decoration sparkle">✧</span>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">أذكاري الذكية</h1>
+            <p class="hero-subtitle">رفيقك الروحي في كل وقت</p>
+            <p class="hero-description">
+                اجعل ذكر الله جزءاً من يومك مع تطبيقنا الشامل للأذكار والأدعية والقرآن الكريم
+            </p>
+            <!-- Prayer times widget -->
+            <div id="prayer"></div>
+            <div class="hero-prayer-widget" id="prayerWidget">
+                <div class="prayer-header">
+                    <strong>مواقيت الصلاة</strong>
+                    <button class="btn btn-outline" id="prayerSettingsBtn">تحديد الموقع</button>
+                </div>
+                <div class="prayer-list" id="prayerList">
+                    <p class="muted">تحميل المواقيت...</p>
+                </div>
+                <div style="margin-top:8px;display:flex;gap:8px;align-items:center;">
+                    <div class="muted" id="prayerLocationDisplay">الموقع: <span id="prayerLocationName">غير محدد</span></div>
+                    <button class="btn btn-small" id="editPrayerLocationBtn" style="padding:6px 8px;">تغيير</button>
+                </div>
+            </div>
+            <!-- Qibla Finder (moved to main interface) -->
+            <div id="qiblaFinder" style="margin:18px auto 0;max-width:520px;display:flex;gap:14px;align-items:center;flex-direction:column;">
+                <div style="display:flex;gap:12px;width:100%;justify-content:space-between;align-items:center;">
+                    <strong>اتجاه القبلة</strong>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <button class="btn btn-outline" id="qiblaUseGeoBtn">استخدام موقعي</button>
+                        <button class="btn btn-secondary" id="qiblaUseDeviceBtn">استخدام البوصلة</button>
+                    </div>
+                </div>
+                <div id="qiblaCompass" style="width:160px;height:160px;border-radius:50%;border:6px solid rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center;position:relative;background:radial-gradient(circle at 40% 30%, #fff 0%, #f7fafc 40%);">
+                    <div id="qiblaArrow" style="width:6px;height:70px;background:var(--primary);position:absolute;top:18px;border-radius:6px;transform-origin:50% 80%;transform:rotate(0deg);"></div>
+                    <div style="position:absolute;bottom:8px;font-weight:700;">القبلة</div>
+                </div>
+                <div id="qiblaDegree" style="font-weight:700;color:var(--foreground);">الزاوية: —°</div>
+                <div id="qiblaHelp" style="color:var(--foreground-light);font-size:0.95rem;">انقر "استخدام موقعي" لحساب الاتجاه بدقة، أو "استخدام البوصلة" لعرض الاتجاه نسبةً لبوصلة الجهاز.</div>
+            </div>
+            <div class="hero-buttons">
+                <a href="#azkar" class="btn btn-primary">ابدأ الآن</a>
+                <a href="#quran" class="btn btn-outline">تعرف على المزيد</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">ذكر وورد</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">40+</span>
+                    <span class="stat-label">حديث نبوي</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">114</span>
+                    <span class="stat-label">سورة قرآنية</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Location modal for prayer settings (same as prayer.html) -->
+        <div id="locationModal" class="modal">
+            <div class="modal-content" style="max-width:420px;direction:rtl;text-align:right;">
+                <div class="modal-header">
+                    <h3>تحديد المدينة</h3>
+                    <button class="modal-close" id="closeLocationModal">×</button>
+                </div>
+                <div class="modal-body">
+                    <label>المدينة (مثال: Cairo):<br><input type="text" id="locCity" style="width:100%;padding:8px;margin-top:6px;" placeholder="المدينة"></label>
+                    <label style="margin-top:10px;display:block;">الدولة (اختياري - مثال: Egypt):<br><input type="text" id="locCountry" style="width:100%;padding:8px;margin-top:6px;" placeholder="الدولة"></label>
+                    <p class="muted" style="margin-top:8px;">يمكنك ترك الدولة فارغة إذا أردت. انقر حفظ لاختبار المواقيت.</p>
+                </div>
+                <div class="modal-footer" style="text-align:left;margin-top:12px;">
+                    <button class="btn btn-secondary" id="saveLocationBtn">حفظ</button>
+                    <button class="btn btn-outline" id="cancelLocationBtn">إلغاء</button>
+                </div>
+            </div>
+        </div>
+        <!-- Geolocation permission help modal -->
+        <div id="locationPermissionModal" class="modal">
+            <div class="modal-content" style="max-width:520px;direction:rtl;text-align:right;padding:20px;">
+                <div class="modal-header">
+                    <h3>الوصول إلى الموقع</h3>
+                    <button class="modal-close" id="closePermissionModal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>تعذر الوصول إلى موقعك. يرجى التحقق من إعدادات أذونات الموقع في متصفحك أو نظام التشغيل ثم المحاولة مرة أخرى.</p>
+                    <ol>
+                        <li>تأكد من أن المتصفح لديه إذن الوصول إلى الموقع.</li>
+                        <li>على الهاتف: افتح إعدادات التطبيق أو إعدادات المتصفح واختر السماح بالموقع.</li>
+                        <li>أعد تحميل الصفحة ثم اضغط "إعادة المحاولة".</li>
+                    </ol>
+                    <p class="muted">إذا لم تنجح، يمكنك إدخال مدينتك يدوياً واستخدام زر "استخدام موقعي" مرة أخرى بعد تعديل الأذونات.</p>
+                </div>
+                <div class="modal-footer" style="text-align:left;">
+                    <button class="btn btn-primary" id="retryGeolocationBtn">إعادة المحاولة</button>
+                    <button class="btn btn-outline" id="dismissPermissionModal">إغلاق</button>
+                </div>
+            </div>
+        </div>
+
+    <!-- Azkar Section -->
+    <section class="azkar-section" id="azkar">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">الأذكار والأدعية</h2>
+                <p class="section-subtitle">اختر من مجموعة متنوعة من الأذكار اليومية</p>
+            </div>
+            <div class="azkar-grid">
+                <div class="azkar-card" onclick="openAzkarModal('morning')">
+                    <div class="azkar-icon">🌅</div>
+                    <h3>أذكار الصباح</h3>
+                    <p>ابدأ يومك بذكر الله</p>
+                    <span class="azkar-count">33 ذكر</span>
+                </div>
+                <div class="azkar-card" onclick="openAzkarModal('evening')">
+                    <div class="azkar-icon">🌙</div>
+                    <h3>أذكار المساء</h3>
+                    <p>اختم يومك بالطمأنينة</p>
+                    <span class="azkar-count">33 ذكر</span>
+                </div>
+                <div class="azkar-card" onclick="openAzkarModal('sleep')">
+                    <div class="azkar-icon">😴</div>
+                    <h3>أذكار النوم</h3>
+                    <p>نم على ذكر الله</p>
+                    <span class="azkar-count">15 ذكر</span>
+                </div>
+                <div class="azkar-card" onclick="openAzkarModal('prayer')">
+                    <div class="azkar-icon">🕌</div>
+                    <h3>أذكار بعد الصلاة</h3>
+                    <p>أكمل صلاتك بالذكر</p>
+                    <span class="azkar-count">20 ذكر</span>
+                </div>
+                <div class="azkar-card" onclick="openAzkarModal('travel')">
+                    <div class="azkar-icon">✈️</div>
+                    <h3>أذكار السفر</h3>
+                    <p>رافق سفرك بالدعاء</p>
+                    <span class="azkar-count">12 ذكر</span>
+                </div>
+                <div class="azkar-card" onclick="openAzkarModal('general')">
+                    <div class="azkar-icon">📿</div>
+                    <h3>أذكار متنوعة</h3>
+                    <p>أذكار لكل المناسبات</p>
+                    <span class="azkar-count">25 ذكر</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quran Section -->
+    <section class="quran-section" id="quran">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">القرآن الكريم</h2>
+                <p class="section-subtitle">اقرأ واستمع إلى آيات من كتاب الله</p>
+            </div>
+            <div class="quran-featured">
+                <div class="quran-verse-card">
+                    <div class="verse-header">
+                        <span class="surah-name">سورة الفاتحة</span>
+                        <span class="verse-number">الآية 1-7</span>
+                    </div>
+                    <p class="verse-text">
+                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ۝ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمَٰنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ
+                    </p>
+                    <div class="verse-actions">
+                        <button class="btn-icon" title="استمع">🔊</button>
+                        <button class="btn-icon" title="احفظ">🔖</button>
+                        <button class="btn-icon" title="شارك">📤</button>
+                    </div>
+                </div>
+            </div>
+            <div class="surah-grid">
+                <div class="surah-card">
+                    <span class="surah-number">1</span>
+                    <div class="surah-info">
+                        <h4>الفاتحة</h4>
+                        <span>7 آيات • مكية</span>
+                    </div>
+                </div>
+                <div class="surah-card">
+                    <span class="surah-number">36</span>
+                    <div class="surah-info">
+                        <h4>يس</h4>
+                        <span>83 آية • مكية</span>
+                    </div>
+                </div>
+                <div class="surah-card">
+                    <span class="surah-number">67</span>
+                    <div class="surah-info">
+                        <h4>الملك</h4>
+                        <span>30 آية • مكية</span>
+                    </div>
+                </div>
+                <div class="surah-card">
+                    <span class="surah-number">55</span>
+                    <div class="surah-info">
+                        <h4>الرحمن</h4>
+                        <span>78 آية • مدنية</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hadith Section -->
+    <section class="hadith-section" id="hadith">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">حديث اليوم</h2>
+                <p class="section-subtitle">تعلم من سنة النبي ﷺ</p>
+            </div>
+            <div class="hadith-carousel">
+                <button class="carousel-btn prev" onclick="prevHadith()">❮</button>
+                <div class="hadith-card" id="hadithCard">
+                    <div class="hadith-content">
+                        <p class="hadith-text" id="hadithText"></p>
+                        <div class="hadith-info">
+                            <span class="hadith-narrator" id="hadithNarrator"></span>
+                            <span class="hadith-source" id="hadithSource"></span>
+                        </div>
+                    </div>
+                    <div class="hadith-actions">
+                        <button class="btn-icon" onclick="toggleLikeHadith()" id="likeBtn">🤍</button>
+                        <button class="btn-icon" onclick="shareHadith()">📤</button>
+                    </div>
+                </div>
+                <button class="carousel-btn next" onclick="nextHadith()">❯</button>
+            </div>
+            <div class="hadith-dots" id="hadithDots"></div>
+        </div>
+    </section>
+
+    <!-- Tasbeeh Section -->
+    <section class="tasbeeh-section" id="tasbeeh">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">المسبحة الإلكترونية</h2>
+                <p class="section-subtitle">سبح واذكر الله بسهولة</p>
+            </div>
+            <div class="tasbeeh-container">
+                <div class="tasbeeh-options">
+                    <button class="tasbeeh-option active" data-target="33" onclick="selectTasbeeh(this, 'سبحان الله', 'Glory be to Allah', 33)">
+                        <span class="option-text">سبحان الله</span>
+                        <span class="option-count">33</span>
+                    </button>
+                    <button class="tasbeeh-option" data-target="33" onclick="selectTasbeeh(this, 'الحمد لله', 'Praise be to Allah', 33)">
+                        <span class="option-text">الحمد لله</span>
+                        <span class="option-count">33</span>
+                    </button>
+                    <button class="tasbeeh-option" data-target="34" onclick="selectTasbeeh(this, 'الله أكبر', 'Allah is the Greatest', 34)">
+                        <span class="option-text">الله أكبر</span>
+                        <span class="option-count">34</span>
+                    </button>
+                    <button class="tasbeeh-option" data-target="100" onclick="selectTasbeeh(this, 'لا إله إلا الله', 'There is no god but Allah', 100)">
+                        <span class="option-text">لا إله إلا الله</span>
+                        <span class="option-count">100</span>
+                    </button>
+                </div>
+                <div class="tasbeeh-counter">
+                    <div class="counter-circle" onclick="incrementCounter()">
+                        <svg class="progress-ring" viewBox="0 0 200 200">
+                            <circle class="progress-ring-bg" cx="100" cy="100" r="90"></circle>
+                            <circle class="progress-ring-fill" id="progressRing" cx="100" cy="100" r="90"></circle>
+                        </svg>
+                        <div class="counter-content">
+                            <span class="counter-number" id="counterNumber">0</span>
+                            <span class="counter-target" id="counterTarget">/ 33</span>
+                        </div>
+                    </div>
+                    <div class="tasbeeh-text">
+                        <p class="tasbeeh-arabic" id="tasbeehArabic">سبحان الله</p>
+                        <p class="tasbeeh-translation" id="tasbeehTranslation">Glory be to Allah</p>
+                    </div>
+                    <div class="tasbeeh-controls">
+                        <button class="btn btn-secondary" onclick="toggleSound()">
+                            <span id="soundIcon">🔊</span>
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetCounter()">إعادة</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">☪</span>
+                    <span class="logo-text">أذكاري الذكية</span>
+                    <p>رفيقك الروحي في كل وقت</p>
+                </div>
+                <div class="footer-links">
+                    <h4>روابط سريعة</h4>
+                    <a href="#azkar">الأذكار</a>
+                        <a href="quran/index.html">القرآن</a>
+                        <a href="#hadith">الحديث</a>
+                        <a href="#tasbeeh">التسبيح</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>تواصل معنا</h4>
+                    <p>للاقتراحات والملاحظات</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 أذكاري الذكية. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Azkar Modal -->
+    <div class="modal" id="azkarModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">أذكار الصباح</h3>
+                <button class="modal-close" onclick="closeAzkarModal()">×</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Azkar will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <!-- Toast container -->
+    <div id="toastContainer" aria-live="polite" aria-atomic="true" style="position:fixed;bottom:20px;left:20px;z-index:9999"></div>
 </body>
 </html>
+
