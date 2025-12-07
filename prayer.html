@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>مواقيت الصلاة - أذكاري الذكية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo"><span class="logo-icon">☪</span><span class="logo-text">أذكاري</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="azkar.html">الأذكار</a></li>
+                <li><a href="quran/index.html">القرآن</a></li>
+                <li><a href="prayer.html" class="active">مواقيت الصلاة</a></li>
+                <li><a href="hadith.html">الحديث</a></li>
+                <li><a href="tasbeeh.html">التسبيح</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="toggle-theme" class="theme-toggle">🌙</button>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            </div>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html" onclick="closeMobileMenu()">الرئيسية</a>
+            <a href="azkar.html" onclick="closeMobileMenu()">الأذكار</a>
+            <a href="quran/index.html" onclick="closeMobileMenu()">القرآن</a>
+            <a href="prayer.html" onclick="closeMobileMenu()">مواقيت الصلاة</a>
+            <a href="hadith.html" onclick="closeMobileMenu()">الحديث</a>
+            <a href="tasbeeh.html" onclick="closeMobileMenu()">التسبيح</a>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top:120px;">
+        <div class="section-header">
+            <h2 class="section-title">مواقيت الصلاة</h2>
+            <p class="section-subtitle">تحقق من مواقيت اليوم وحصول تذكيرات عند الأذان</p>
+        </div>
+
+        <div class="hero-prayer-widget" id="prayerWidget">
+            <div class="prayer-header">
+                <strong>مواقيت الصلاة</strong>
+                <button class="btn btn-outline" id="prayerSettingsBtn">تحديد الموقع</button>
+            </div>
+            <!-- Inline location display and editor for the standalone prayer page -->
+            <div id="prayerInlineLocation" style="margin-top:8px;">
+                <div id="inlineLocationDisplay" style="display:flex;gap:12px;align-items:center;justify-content:space-between;">
+                    <div class="muted">الموقع: <span id="inlinePrayerLocationName">غير محدد</span></div>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn btn-small" id="toggleInlineLocationBtn">تغيير الموقع</button>
+                    </div>
+                </div>
+                <div id="inlineLocationForm" style="display:none;margin-top:10px;">
+                    <input id="inlineLocCity" type="text" placeholder="المدينة (مثال: Cairo)" style="padding:8px;width:48%;" />
+                    <input id="inlineLocCountry" type="text" placeholder="الدولة (اختياري)" style="padding:8px;width:48%;" />
+                    <div style="margin-top:8px;display:flex;gap:8px;">
+                        <button class="btn btn-secondary" id="inlineSaveLocationBtn">حفظ</button>
+                        <button class="btn btn-outline" id="inlineCancelLocationBtn">إلغاء</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Qibla Finder moved to main interface -->
+            <div class="prayer-list" id="prayerList">
+                <p class="muted">تحميل المواقيت...</p>
+            </div>
+        </div>
+
+        <div style="margin-top:18px;">
+            <p class="muted">ملاحظة: ستطلب الصفحة الوصول للموقع إذا كانت متاحة في المتصفح.</p>
+        </div>
+        </main>
+
+        <!-- Location modal for prayer settings -->
+        <div id="locationModal" class="modal">
+            <div class="modal-content" style="max-width:420px;direction:rtl;text-align:right;">
+                <div class="modal-header">
+                    <h3>تحديد المدينة</h3>
+                    <button class="modal-close" id="closeLocationModal">×</button>
+                </div>
+                <div class="modal-body">
+                    <label>المدينة (مثال: الرياض):<br><input type="text" id="locCity" style="width:100%;padding:8px;margin-top:6px;" placeholder="المدينة"></label>
+                    <label style="margin-top:10px;display:block;">الدولة (اختياري - مثال: Egypt):<br><input type="text" id="locCountry" style="width:100%;padding:8px;margin-top:6px;" placeholder="الدولة"></label>
+                    <p class="muted" style="margin-top:8px;">يمكنك ترك الدولة فارغة إذا أردت. انقر حفظ لاختبار المواقيت.</p>
+                </div>
+                <div class="modal-footer" style="text-align:left;margin-top:12px;">
+                    <button class="btn btn-secondary" id="saveLocationBtn">حفظ</button>
+                    <button class="btn btn-outline" id="cancelLocationBtn">إلغاء</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+</body>
+</html>

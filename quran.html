@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>القرآن الكريم - أذكاري الذكية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo"><span class="logo-icon">☪</span><span class="logo-text">أذكاري</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="azkar.html">الأذكار</a></li>
+                <li><a href="quran/index.html" class="active">القرآن</a></li>
+                <li><a href="hadith.html">الحديث</a></li>
+                <li><a href="tasbeeh.html">التسبيح</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="toggle-theme" class="theme-toggle">🌙</button>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            </div>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html" onclick="closeMobileMenu()">الرئيسية</a>
+            <a href="azkar.html" onclick="closeMobileMenu()">الأذكار</a>
+            <a href="quran/index.html" onclick="closeMobileMenu()">القرآن</a>
+            <a href="hadith.html" onclick="closeMobileMenu()">الحديث</a>
+            <a href="tasbeeh.html" onclick="closeMobileMenu()">التسبيح</a>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top:120px;">
+        <div class="section-header">
+            <h2 class="section-title">سور القرآن الكريم</h2>
+            <p class="section-subtitle">اختر سورة لعرض الآيات كاملة</p>
+        </div>
+
+        <div class="quran-controls" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px;">
+            <label for="surahSelect">اختر السورة:</label>
+            <select id="surahSelect"></select>
+            <button class="btn btn-primary" id="loadSurahBtn">عرض السورة</button>
+        </div>
+
+        <div id="surahMeta" style="margin-bottom:14px;color:var(--foreground-light);"></div>
+        <article id="surahContent" class="quran-verse-card" style="padding:18px;">
+            <p class="muted">اختر سورة للبدء — سيتم جلب النص الكامل من الإنترنت.</p>
+        </article>
+    </main>
+
+    <script>
+    // populate surah list (1..114)
+    const surahSelect = document.getElementById('surahSelect');
+    for (let i=1;i<=114;i++) {
+        const opt = document.createElement('option'); opt.value = i; opt.textContent = `سورة ${i}`; surahSelect.appendChild(opt);
+    }
+
+    async function loadSurah(num) {
+        const content = document.getElementById('surahContent');
+        const meta = document.getElementById('surahMeta');
+        content.innerHTML = '<p class="muted">جاري تحميل السورة...</p>';
+        try {
+            const res = await fetch(`https://api.quran.sutanlab.id/surah/${num}`);
+            const json = await res.json();
+            if (!json || !json.data) { content.innerHTML = '<p class="muted">تعذر جلب السورة</p>'; return; }
+            const s = json.data;
+            meta.textContent = `${s.name.translatedName ? s.name.translatedName.name : s.name.short} — عدد الآيات: ${s.numberOfVerses || s.verses.length}`;
+            content.innerHTML = s.verses.map(v => `<p class="verse-text">${v.text.arab}</p>`).join('');
+        } catch (e) {
+            content.innerHTML = '<p class="muted">خطأ في جلب السورة</p>';
+        }
+    }
+
+    document.getElementById('loadSurahBtn').addEventListener('click', ()=> loadSurah(surahSelect.value));
+    // load first by default
+    loadSurah(1);
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
