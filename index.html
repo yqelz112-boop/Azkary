@@ -86,7 +86,6 @@
             </div>
             <div class="hero-buttons">
                 <a href="#azkar" class="btn btn-primary">ابدأ الآن</a>
-                <a href="#quran" class="btn btn-outline">تعرف على المزيد</a>
             </div>
             <div class="hero-stats">
                 <div class="stat">
@@ -210,7 +209,6 @@
                         </div>
                     </div>
                     <div class="hadith-actions">
-                        <button class="btn-icon" onclick="toggleLikeHadith()" id="likeBtn">🤍</button>
                         <button class="btn-icon" onclick="shareHadith()">📤</button>
                     </div>
                 </div>
@@ -229,19 +227,19 @@
             </div>
             <div class="tasbeeh-container">
                 <div class="tasbeeh-options">
-                    <button class="tasbeeh-option active" data-target="33" onclick="selectTasbeeh(this, 'سبحان الله', 'Glory be to Allah', 33)">
+                    <button class="tasbeeh-option active" data-target="33" onclick="selectTasbeeh(this, 'سبحان الله', 33)">
                         <span class="option-text">سبحان الله</span>
                         <span class="option-count">33</span>
                     </button>
-                    <button class="tasbeeh-option" data-target="33" onclick="selectTasbeeh(this, 'الحمد لله', 'Praise be to Allah', 33)">
+                    <button class="tasbeeh-option" data-target="33" onclick="selectTasbeeh(this, 'الحمد لله', 33)">
                         <span class="option-text">الحمد لله</span>
                         <span class="option-count">33</span>
                     </button>
-                    <button class="tasbeeh-option" data-target="34" onclick="selectTasbeeh(this, 'الله أكبر', 'Allah is the Greatest', 34)">
+                    <button class="tasbeeh-option" data-target="33" onclick="selectTasbeeh(this, 'الله أكبر', 33)">
                         <span class="option-text">الله أكبر</span>
-                        <span class="option-count">34</span>
+                        <span class="option-count">33</span>
                     </button>
-                    <button class="tasbeeh-option" data-target="100" onclick="selectTasbeeh(this, 'لا إله إلا الله', 'There is no god but Allah', 100)">
+                    <button class="tasbeeh-option" data-target="100" onclick="selectTasbeeh(this, 'لا إله إلا الله', 100)">
                         <span class="option-text">لا إله إلا الله</span>
                         <span class="option-count">100</span>
                     </button>
@@ -259,7 +257,7 @@
                     </div>
                     <div class="tasbeeh-text">
                         <p class="tasbeeh-arabic" id="tasbeehArabic">سبحان الله</p>
-                        <p class="tasbeeh-translation" id="tasbeehTranslation">Glory be to Allah</p>
+                        <p class="tasbeeh-translation" id="tasbeehTranslation"></p>
                     </div>
                     <div class="tasbeeh-controls">
                         <button class="btn btn-secondary" onclick="toggleSound()">
